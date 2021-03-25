@@ -48,17 +48,17 @@ public class AVLTree {
 		//Tree Balance
 		int b = balance(t);
 		//left left violation
-		if(b > 1 && value < t.left.data) {
+		if(b > 1 && balance(t.left) >= 0) {
 			return rotateRight(t);
 		}
 		//left right violation
-		if(b > 1 && value > t.left.data)
+		if(b > 1 && balance(t.left) < 0)
 			return rotateRight(t);
 		//right right violation
-		if(b < -1 && value > t.left.data)
+		if(b < 0 && balance(t.right) <= 0)
 			return rotateLeft(t);
 		//right left violation
-		if(b < -1 && value < t.right.data)
+		if(b < -1 && balance(t.right) > 0)
 			return rotateLeft(t);
 		return t;
 		

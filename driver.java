@@ -11,7 +11,6 @@ import java.io.*;
 public class driver {
 	public static void main(String args[]) {
 		int [] a = {1,2,3,4,5,6,7};
-		
 		//declare AVL roots
 		AVLTree tree = new AVLTree();
 		AVLTree.Node rootTree1 = null;
