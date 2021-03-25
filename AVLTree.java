@@ -112,13 +112,27 @@ public class AVLTree {
 		if(value < t.data) 
 			t.left = insert(t.left, value);
 		else t.right = insert(t.right, value);
+		
 		//Height update
 		t.height = Math.max(height(t.left), height(t.right))+1;
+		
+		//Tree Balance
 		int b = balance(t);
+		//left left violation
 		if(b==2 && value < t.left.data) {
 			return rotateRight(t);
 		}
-		else return doubleRotateRight(t);
+		//left right violation
+		if(b == 2 && value > t.left.data)
+			return rotateRight(t);
+		//right right violation
+		else if(b==2 && value > t.left.data)
+			return rotateLeft(t);
+		//right left violation
+		else if(b == 2 && value < t.right.data)
+			return rotateLeft(t);
+		return t;
+		
 		
 	}
 	
