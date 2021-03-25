@@ -32,7 +32,7 @@ public class AVLTree {
 		return height(t.left)- height(t.right); 
 	}
 	
-	Node insert(Node t, int value) {
+	public Node insert(Node t, int value) {
 		//compare statements
 		if(t==null) 
 			return(new Node(value));
@@ -48,18 +48,22 @@ public class AVLTree {
 		//Tree Balance
 		int b = balance(t);
 		//left left violation
-		if(b > 1 && balance(t.left) >= 0) {
+		if(b > 1 && value < t.left.data) {
 			return rotateRight(t);
 		}
 		//left right violation
-		if(b > 1 && balance(t.left) < 0)
+		if(b >1 && value > t.left.data) {
+			t.left = rotateLeft(t.left);
 			return rotateRight(t);
+		}
 		//right right violation
-		if(b < 0 && balance(t.right) <= 0)
+		if(b < -1 && value > t.right.data)
 			return rotateLeft(t);
 		//right left violation
-		if(b < -1 && balance(t.right) > 0)
+		if(b < -1 && value < t.right.data) {
+			t.right = rotateRight(t.right);
 			return rotateLeft(t);
+		}
 		return t;
 		
 		
@@ -69,7 +73,7 @@ public class AVLTree {
 		return t.height = Math.max(heightUpdate(t.left), heightUpdate(t.right))+1;
 	}*/
 	
-	Node findMin(Node t) {
+	private Node findMin(Node t) {
 		Node lowVal = t;
 		while(lowVal != null) {
 			lowVal = lowVal.left;
@@ -81,12 +85,12 @@ public class AVLTree {
 		return 0;
 	}*/
 	
-	public Node rotateLeft(Node t) {
+	private Node rotateLeft(Node t) {
 		Node nRight = t.right;
-		Node nLeft = t.left;
+		Node nLeft = nRight.left;
 		//rotate
-		t.right = nLeft;
 		nRight.left = t;
+		t.right = nLeft;
 		//update height
 		t.height = Math.max(height(t.left), height(t.right))+1;
 		nRight.height = Math.max(height(nRight.left), height(nRight.right))+1;
@@ -99,8 +103,8 @@ public class AVLTree {
 		Node nRight = nLeft.right;
 		
 		//rotate
-		t.left = nRight;
 		nLeft.right = t;
+		t.left = nRight;
 		//update height
 		t.height = Math.max(height(t.left), height(t.right))+1;
 		nLeft.height = Math.max(height(nLeft.left), height(nLeft.right))+1;
